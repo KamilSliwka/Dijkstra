@@ -1,22 +1,9 @@
 #include <iostream>
 #include"Vertex.h"
+#include "GraphNode.h"
 #include "vector"
 #include "queue"
 using namespace std;
-
-struct GraphNode {
-    int source;
-    int destination;
-    int cost;
-    GraphNode* next;
-
-    GraphNode(int source, int destination, int cost) {
-        this->source = source;
-        this->destination = destination;
-        this->cost = cost;
-        next = nullptr;
-    }
-};
 
 struct Graph {
     int numVertices;
@@ -34,9 +21,9 @@ struct Graph {
     void addEdge(int source, int destination, int cost) {
         GraphNode* newNode = new GraphNode(source, destination, cost);
         GraphNode* newNode1 = new GraphNode(destination, source, cost);
-        newNode->next = adjacencyList[source];
+        newNode->setNext(adjacencyList[source]);
         adjacencyList[source] = newNode;
-        newNode1->next = adjacencyList[destination];
+        newNode1->setNext(adjacencyList[destination]);
         adjacencyList[destination] = newNode1;
     }
 
@@ -49,8 +36,8 @@ struct Graph {
             cout << "Vertex " << i << ": ";
             GraphNode* temp = adjacencyList[i];
             while (temp != nullptr) {
-                cout << temp->destination << "(" << temp->cost << ")" << " -> ";
-                temp = temp->next;
+                cout << temp->getDestination() << "(" << temp->getCost() << ")" << " -> ";
+                temp = temp->getNext();
             }
             cout << "NULL" << endl;
         }
@@ -83,8 +70,8 @@ void dijkstra(int startVertex, int endVertex, Graph g,bool question) {
 
         GraphNode* temp = g.adjacencyList[u];
         while (temp != nullptr) {
-            int v = temp->destination;
-            int cost = temp->cost;
+            int v = temp->getDestination();
+            int cost = temp->getCost();
 
             if (distances[u] != INT_MAX && distances[u] + cost < distances[v]) {
                 distances[v] = distances[u] + cost;
@@ -95,7 +82,7 @@ void dijkstra(int startVertex, int endVertex, Graph g,bool question) {
                 pq.push(tmp);
             }
 
-            temp = temp->next;
+            temp = temp->getNext();
         }
     }
     if (startVertex== endVertex) {
