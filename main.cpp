@@ -1,56 +1,18 @@
 #include <iostream>
 #include"Vertex.h"
 #include "GraphNode.h"
+#include "Graph.h"
 #include "vector"
 #include "queue"
 using namespace std;
-
-struct Graph {
-    int numVertices;
-    GraphNode** adjacencyList;
-
-
-    Graph(int numVertices) {
-        this->numVertices = numVertices;
-        adjacencyList = new GraphNode * [numVertices];
-        for (int i = 0; i < numVertices; i++) {
-            adjacencyList[i] = nullptr;
-        }
-    }
-
-    void addEdge(int source, int destination, int cost) {
-        GraphNode* newNode = new GraphNode(source, destination, cost);
-        GraphNode* newNode1 = new GraphNode(destination, source, cost);
-        newNode->setNext(adjacencyList[source]);
-        adjacencyList[source] = newNode;
-        newNode1->setNext(adjacencyList[destination]);
-        adjacencyList[destination] = newNode1;
-    }
-
-    int GetnumVertices() {
-        return numVertices;
-    }
-
-    void printGraph() {
-        for (int i = 0; i < numVertices; i++) {
-            cout << "Vertex " << i << ": ";
-            GraphNode* temp = adjacencyList[i];
-            while (temp != nullptr) {
-                cout << temp->getDestination() << "(" << temp->getCost() << ")" << " -> ";
-                temp = temp->getNext();
-            }
-            cout << "NULL" << endl;
-        }
-    }
-};
 
 void dijkstra(int startVertex, int endVertex, Graph g,bool question) {
 
     queue<Vertex> pq;
 
-    vector<int> distances(g.GetnumVertices(), INT_MAX);
-    vector<int> parent(g.GetnumVertices(), -1);
-    vector<bool> visited(g.GetnumVertices(), false);
+    vector<int> distances(g.getNumVertices(), INT_MAX);
+    vector<int> parent(g.getNumVertices(), -1);
+    vector<bool> visited(g.getNumVertices(), false);
     Vertex w;
     distances[startVertex] = 0;
     w.setDistanceFromStart(0);
@@ -68,7 +30,8 @@ void dijkstra(int startVertex, int endVertex, Graph g,bool question) {
 
         visited[u] = true;
 
-        GraphNode* temp = g.adjacencyList[u];
+        GraphNode* temp = g.getAdjacencyList()[u];
+
         while (temp != nullptr) {
             int v = temp->getDestination();
             int cost = temp->getCost();
