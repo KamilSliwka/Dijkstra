@@ -1,12 +1,8 @@
 #include <iostream>
+#include"Vertex.h"
 #include "vector"
 #include "queue"
 using namespace std;
-
-struct Vertex {
-    int vertexNumber;
-    int distanceFromStart;
-};
 
 struct GraphNode {
     int source;
@@ -70,13 +66,13 @@ void dijkstra(int startVertex, int endVertex, Graph g,bool question) {
     vector<bool> visited(g.GetnumVertices(), false);
     Vertex w;
     distances[startVertex] = 0;
-    w.distanceFromStart = 0;
-    w.vertexNumber = startVertex;
+    w.setDistanceFromStart(0);
+    w.setVertexNumber(startVertex);
     pq.push(w);
 
     while (!pq.empty()) {
 
-        int u = pq.front().vertexNumber;
+        int u = pq.front().getVertexNumber();
         pq.pop();
 
         if (visited[u]) {
@@ -94,8 +90,8 @@ void dijkstra(int startVertex, int endVertex, Graph g,bool question) {
                 distances[v] = distances[u] + cost;
                 parent[v] = u;
                 Vertex tmp;
-                tmp.distanceFromStart = distances[v];
-                tmp.vertexNumber = v;
+                tmp.setDistanceFromStart( distances[v]);
+                tmp.setVertexNumber(v);
                 pq.push(tmp);
             }
 
