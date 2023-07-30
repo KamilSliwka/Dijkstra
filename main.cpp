@@ -4,16 +4,38 @@
 
 using namespace std;
 
+bool isConnection(int cost){
+    if(cost!=0){
+        return true;
+    }
+    return false;
+}
+
 int main() {
-    Graph g(5);
-    g.addEdge(0,1,4);
-    g.addEdge(0,3,2);
-    g.addEdge(0,4,3);
-    g.addEdge(1,2,8);
-    g.addEdge(2,4,1);
-    g.addEdge(3,4,2);
-    Dijkstra d(1,2,g,true);
-    d.findShortestPath();
+    int numberOfVertex;
+    cout<<"enter the size of the matrix: "<<endl;
+    cin>>numberOfVertex;
+    getchar();
+    Graph graph(numberOfVertex);
+    char x;
+    cout<<"enter a matrix of only values between 0 and 9: "<<endl;
+    for(int i = 0;i < numberOfVertex;i++){
+        for(int j = 0;j < numberOfVertex;j++){
+            cin.get(x);
+            int cost =(int)x-48;
+            if(isConnection(cost)){
+                graph.addEdge(i,j,cost);
+            }
+        }
+    }
+    cout<<"select the starting vertex of only values between 0 and "<<numberOfVertex-1<<": "<<endl;
+    int startVertex;
+    cin>>startVertex;
+    cout<<"select the ending vertex of only values between 0 and "<<numberOfVertex-1<<": "<<endl;
+    int endVertex;
+    cin>>endVertex;
+    Dijkstra algorithm(startVertex,endVertex,graph,true);
+    algorithm.findShortestPath();
 
     return 0;
 }
