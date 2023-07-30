@@ -15,6 +15,8 @@ private:
 public:
     Graph(int numVertices) ;
 
+    Graph();
+
     void addEdge(int source, int destination, int cost) ;
 
     void makeEmptyAdjacencyList();

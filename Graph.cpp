@@ -43,3 +43,5 @@ GraphNode **Graph::getAdjacencyList() const {
 void Graph::setAdjacencyList(GraphNode **adjacencyList) {
     Graph::adjacencyList = adjacencyList;
 }
+
+Graph::Graph() {}
