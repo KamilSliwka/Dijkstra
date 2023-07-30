@@ -17,12 +17,25 @@ int main() {
     cin>>numberOfVertex;
     getchar();
     Graph graph(numberOfVertex);
-    char x;
     cout<<"enter a matrix of only values between 0 and 9: "<<endl;
+    int correctAmountOfData =numberOfVertex*numberOfVertex;
+    string buffor;
+    cin>>buffor;
+
+    if(buffor.length()!=correctAmountOfData){
+        cout<<"Wrong data!"<<endl;
+        return 0;
+    }
+
+    int counter=0;
     for(int i = 0;i < numberOfVertex;i++){
         for(int j = 0;j < numberOfVertex;j++){
-            cin.get(x);
-            int cost =(int)x-48;
+            int cost =(int)buffor[counter]-48;
+            counter++;
+            if(cost<0||cost>9){
+                cout<<"Wrong data!"<<endl;
+                return 0;
+            }
             if(isConnection(cost)){
                 graph.addEdge(i,j,cost);
             }
